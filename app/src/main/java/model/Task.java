@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
  *
- * @author Ghost
+ * @author Wladmir Rodrigues
  */
 public class Task {
     

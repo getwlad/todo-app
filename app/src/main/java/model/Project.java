@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  *
- * @author Ghost
+ * @author Wladmir Rodrigues
  */
 public class Project {
     private int id;
