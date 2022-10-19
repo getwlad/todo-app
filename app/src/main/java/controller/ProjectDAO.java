@@ -20,7 +20,7 @@ import model.Project;
  */
 public class ProjectDAO {
 
-    public void save(Project project) throws SQLException {
+    public void save(Project project) {
         String sql = "INSERT INTO projects (name,"
                 + "description,"
                 + "createdAt,"
@@ -52,14 +52,15 @@ public class ProjectDAO {
     }
 
     public void update(Project project) {
-        String sql = "UPDATE project SET "
-                + "name = ?, "
+        String sql = "UPDATE projects SET "
+                + "name = ?,"
                 + "description = ?,"
                 + "createdAt = ?,"
-                + "updatedAt = ?"
+                + "updatedAt = ? "
                 + "WHERE id = ?";
         Connection conn = null;
         PreparedStatement statement = null;
+
         try {
             //Estabelecendo a conexão com o banco de dados
             conn = ConnectionFactory.getConnection();
@@ -76,6 +77,7 @@ public class ProjectDAO {
 
             //Executando a query
             statement.execute();
+
         } catch (Exception e) {
             throw new RuntimeException("Ocorreu um erro ao atualizar o projeto "
                     + e.getMessage(), e);
@@ -84,7 +86,7 @@ public class ProjectDAO {
         }
     }
 
-    public void removeById(int projectId) throws SQLException {
+    public void removeById(int projectId) {
         String sql = "DELETE FROM projects WHERE id = ?";
 
         Connection conn = null;
@@ -109,7 +111,7 @@ public class ProjectDAO {
         }
     }
 
-    public List<Project> getAll() throws SQLException {
+    public List<Project> getAll() {
         String sql = "SELECT * from projects";
         Connection conn = null;
         PreparedStatement statement = null;

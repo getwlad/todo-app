@@ -3,17 +3,53 @@
  */
 package todoApp;
 
-import java.sql.Connection;
-import util.ConnectionFactory;
+import controller.ProjectDAO;
+import controller.TaskDAO;
+import java.sql.SQLException;
+import model.Project;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import model.Task;
 
 public class App {
     public String getGreeting() {
         return "Hello World! mkk";
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         System.out.println(new App().getGreeting());
-        Connection c = ConnectionFactory.getConnection();
-        ConnectionFactory.closeConnection(c);
+        
+//        ProjectDAO projectController = new ProjectDAO();
+//        
+//        Project project = new Project();
+//        project.setName("Teste");
+//        project.setDescription("descrição teste");
+//        projectController.save(project);
+//        
+//        List<Project> projList = projectController.getAll();
+//        System.out.println(projList);
+//        System.out.println("------");
+//        
+//        project = projList.get(0);
+//        project.setName("Atualizado");
+//        projectController.update(project);
+//        projList = projectController.getAll();
+//        System.out.println(projList);
+//        
+//        TaskDAO taskController = new TaskDAO();
+//        Task task = new Task();
+//        task.setName("Nova tarefa");
+//        task.setDescription("Descrição da tarefa");
+//        task.setNotes("Notas da tarefa");
+//        task.setDeadline(new Date());
+//        task.setIsCompleted(false);
+//        task.setIdProject(project.getId());
+//        taskController.save(task);
+//        
+//        List<Task> tasks = taskController.getAll(project.getId());
+//        System.out.println(tasks);
+        
+        
     }
 }

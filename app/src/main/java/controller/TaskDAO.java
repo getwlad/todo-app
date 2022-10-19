@@ -20,7 +20,7 @@ import util.ConnectionFactory;
  */
 public class TaskDAO {
 
-    public void save(Task task) throws SQLException {
+    public void save(Task task)  {
         String sql = "INSERT INTO tasks (idProject,"
                 + "name,"
                 + "description,"
@@ -100,7 +100,7 @@ public class TaskDAO {
         }
     }
 
-    public void removeById(int taskId) throws SQLException {
+    public void removeById(int taskId)  {
         String sql = "DELETE FROM tasks WHERE id = ?";
 
         Connection conn = null;
@@ -125,7 +125,7 @@ public class TaskDAO {
         }
     }
 
-    public List<Task> getAll(int idProject) throws SQLException {
+    public List<Task> getAll(int idProject)  {
         String sql = "SELECT * from tasks where idProject = ?";
         Connection conn = null;
         PreparedStatement statement = null;
