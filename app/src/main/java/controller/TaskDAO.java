@@ -63,7 +63,7 @@ public class TaskDAO {
         String sql = "UPDATE tasks SET "
                 + "idProject = ?,"
                 + "name = ?,"
-                + "description ?,"
+                + "description = ?,"
                 + "completed = ?,"
                 + "notes = ?,"
                 + "deadline = ?,"
@@ -88,7 +88,7 @@ public class TaskDAO {
             statement.setDate(6, new Date(task.getDeadline().getTime()));
             statement.setDate(7, new Date(task.getCreatedAt().getTime()));
             statement.setDate(8, new Date(task.getUpdatedAt().getTime()));
-            statement.setInt(8, task.getId());
+            statement.setInt(9, task.getId());
             
             //Executando a query
             statement.execute();
