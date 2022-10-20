@@ -4,18 +4,27 @@
  */
 package view;
 
+import controller.TaskDAO;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import model.Task;
+import model.Project;
+
 /**
  *
  * @author Wladmir Rodrigues
  */
-public class TaskDialog extends javax.swing.JDialog {
+public class TaskDialogScreen extends javax.swing.JDialog {
 
-    /**
-     * Creates new form TaskDialog
-     */
-    public TaskDialog(java.awt.Frame parent, boolean modal) {
+    TaskDAO controller;
+    Project project;
+
+    public TaskDialogScreen(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        controller = new TaskDAO();
     }
 
     /**
@@ -34,13 +43,13 @@ public class TaskDialog extends javax.swing.JDialog {
         jTextFieldName = new javax.swing.JTextField();
         jLabelDescription = new javax.swing.JLabel();
         jScrollPaneDescription = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreadDescription = new javax.swing.JTextArea();
         jLabelDeadline = new javax.swing.JLabel();
-        jTextFieldDeadline = new javax.swing.JTextField();
         jLabelNotes = new javax.swing.JLabel();
         jScrollPaneNotes = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        jTextAreaNotes = new javax.swing.JTextArea();
         jLabelDone = new javax.swing.JLabel();
+        jFormattedTextFieldDeadline = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -78,10 +87,10 @@ public class TaskDialog extends javax.swing.JDialog {
         jLabelDescription.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabelDescription.setText("Descrição");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jTextArea1.setRows(5);
-        jScrollPaneDescription.setViewportView(jTextArea1);
+        jTextAreadDescription.setColumns(20);
+        jTextAreadDescription.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jTextAreadDescription.setRows(5);
+        jScrollPaneDescription.setViewportView(jTextAreadDescription);
 
         jLabelDeadline.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabelDeadline.setText("Prazo");
@@ -89,35 +98,42 @@ public class TaskDialog extends javax.swing.JDialog {
         jLabelNotes.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabelNotes.setText("Notas");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jTextArea2.setRows(5);
-        jScrollPaneNotes.setViewportView(jTextArea2);
+        jTextAreaNotes.setColumns(20);
+        jTextAreaNotes.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jTextAreaNotes.setRows(5);
+        jScrollPaneNotes.setViewportView(jTextAreaNotes);
 
         jLabelDone.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabelDone.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelDone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/checked.png"))); // NOI18N
         jLabelDone.setText("Concluído");
+        jLabelDone.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelDoneMouseClicked(evt);
+            }
+        });
+
+        jFormattedTextFieldDeadline.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
 
         javax.swing.GroupLayout jPanelDetailsLayout = new javax.swing.GroupLayout(jPanelDetails);
         jPanelDetails.setLayout(jPanelDetailsLayout);
         jPanelDetailsLayout.setHorizontalGroup(
             jPanelDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelDetailsLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDetailsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelDone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPaneDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
-                    .addComponent(jTextFieldName)
-                    .addComponent(jTextFieldDeadline)
-                    .addGroup(jPanelDetailsLayout.createSequentialGroup()
+                .addGroup(jPanelDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jFormattedTextFieldDeadline)
+                    .addComponent(jLabelDone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPaneDescription, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
+                    .addComponent(jTextFieldName, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelDetailsLayout.createSequentialGroup()
                         .addGroup(jPanelDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelName)
                             .addComponent(jLabelDescription)
                             .addComponent(jLabelDeadline)
                             .addComponent(jLabelNotes))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPaneNotes))
+                    .addComponent(jScrollPaneNotes, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap())
         );
         jPanelDetailsLayout.setVerticalGroup(
@@ -134,7 +150,7 @@ public class TaskDialog extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jLabelDeadline)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldDeadline, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jFormattedTextFieldDeadline, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelNotes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -169,6 +185,32 @@ public class TaskDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jLabelDoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDoneMouseClicked
+
+        try {
+            Task task = new Task();
+
+            task.setIdProject(project.getId());
+
+            task.setName(jTextFieldName.getText());
+            task.setDescription(jTextAreadDescription.getText());
+            task.setNotes(jTextAreaNotes.getText());
+            task.setIsCompleted(false);
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date deadline = null;
+            deadline = dateFormat.parse(jFormattedTextFieldDeadline.getText());
+            task.setDeadline(deadline);
+            
+            controller.save(task);
+            JOptionPane.showMessageDialog(rootPane, "Tarefa salva");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Ocorreu algum erro ao salvar a tarefa " + e.getMessage());
+        }
+        this.dispose();
+    }//GEN-LAST:event_jLabelDoneMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -186,20 +228,21 @@ public class TaskDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TaskDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TaskDialogScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TaskDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TaskDialogScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TaskDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TaskDialogScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TaskDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TaskDialogScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TaskDialog dialog = new TaskDialog(new javax.swing.JFrame(), true);
+                TaskDialogScreen dialog = new TaskDialogScreen(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -212,6 +255,7 @@ public class TaskDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField jFormattedTextFieldDeadline;
     private javax.swing.JLabel jLabelDeadline;
     private javax.swing.JLabel jLabelDescription;
     private javax.swing.JLabel jLabelDone;
@@ -222,9 +266,13 @@ public class TaskDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanelTitle;
     private javax.swing.JScrollPane jScrollPaneDescription;
     private javax.swing.JScrollPane jScrollPaneNotes;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextField jTextFieldDeadline;
+    private javax.swing.JTextArea jTextAreaNotes;
+    private javax.swing.JTextArea jTextAreadDescription;
     private javax.swing.JTextField jTextFieldName;
     // End of variables declaration//GEN-END:variables
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
 }
