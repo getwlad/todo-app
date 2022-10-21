@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import model.Project;
 import model.Task;
+import util.ButtonColumnCellRenderer;
 import util.DeadlineColumnCellRenderer;
 import util.TaskTableModel;
 
@@ -153,11 +154,19 @@ public class MainScreen extends javax.swing.JFrame {
         jLabelProjectsTitle.setForeground(new java.awt.Color(0, 153, 102));
         jLabelProjectsTitle.setText("Projetos");
 
+        jLabelProjectsAdd.setBackground(new java.awt.Color(255, 255, 255));
         jLabelProjectsAdd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelProjectsAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/add.png"))); // NOI18N
+        jLabelProjectsAdd.setOpaque(true);
         jLabelProjectsAdd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabelProjectsAddMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabelProjectsAddMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabelProjectsAddMouseExited(evt);
             }
         });
 
@@ -262,15 +271,20 @@ public class MainScreen extends javax.swing.JFrame {
         jLabelTasksTitle.setForeground(new java.awt.Color(0, 153, 102));
         jLabelTasksTitle.setText("Tarefas");
 
+        jLabelTasksAdd.setBackground(new java.awt.Color(255, 255, 255));
         jLabelTasksAdd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTasksAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/add.png"))); // NOI18N
         jLabelTasksAdd.setToolTipText("");
+        jLabelTasksAdd.setOpaque(true);
         jLabelTasksAdd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabelTasksAddMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabelTasksAddMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabelTasksAddMouseExited(evt);
             }
         });
 
@@ -396,7 +410,23 @@ public class MainScreen extends javax.swing.JFrame {
     private void jLabelTasksAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTasksAddMouseEntered
         // TODO add your handling code here:
         jLabelTasksAdd.setBackground(Color.green);
+       
     }//GEN-LAST:event_jLabelTasksAddMouseEntered
+
+    private void jLabelTasksAddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTasksAddMouseExited
+        // TODO add your handling code here:
+        jLabelTasksAdd.setBackground(Color.WHITE);
+    }//GEN-LAST:event_jLabelTasksAddMouseExited
+
+    private void jLabelProjectsAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelProjectsAddMouseEntered
+        // TODO add your handling code here:
+         jLabelProjectsAdd.setBackground(Color.green);
+    }//GEN-LAST:event_jLabelProjectsAddMouseEntered
+
+    private void jLabelProjectsAddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelProjectsAddMouseExited
+        // TODO add your handling code here:
+         jLabelProjectsAdd.setBackground(Color.WHITE);
+    }//GEN-LAST:event_jLabelProjectsAddMouseExited
 
     /**
      * @param args the command line arguments
@@ -462,8 +492,10 @@ public class MainScreen extends javax.swing.JFrame {
         jTableTasks.getTableHeader().setForeground(new Color(255, 255, 255));
         
         jTableTasks.getColumnModel().getColumn(2).setCellRenderer(new DeadlineColumnCellRenderer());
-        //Criando um sorter automático para as colunas da table
-        jTableTasks.setAutoCreateRowSorter(true);
+        
+        jTableTasks.getColumnModel().getColumn(5).setCellRenderer(new ButtonColumnCellRenderer("edit"));
+        jTableTasks.getColumnModel().getColumn(6).setCellRenderer(new ButtonColumnCellRenderer("delete"));
+
     }
 
     public void initDataController() {
@@ -502,8 +534,9 @@ public class MainScreen extends javax.swing.JFrame {
 
     public void loadTasks(int idProject) {
         List<Task> tasks = taskController.getAll(idProject);
+        
         tasksModel.setTasks(tasks);
-
+        
         showJTableTasks(!tasks.isEmpty());
     }
 

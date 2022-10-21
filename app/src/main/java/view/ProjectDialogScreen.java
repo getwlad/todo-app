@@ -153,6 +153,11 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
 
     private void jLabelDoneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDoneMouseClicked
         try {
+            if (jTextFieldName.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "O projeto não foi salvo, "
+                        + "preencha corretamente o campo nome");
+                return;
+            }
             Project project = new Project();
             project.setName(jTextFieldName.getText());
             project.setDescription(jTextAreaDescription.getText());
@@ -161,7 +166,7 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Ocorreu algum erro ao criar o projeto " + e.getMessage());
         }
-         this.dispose();
+        this.dispose();
 
     }//GEN-LAST:event_jLabelDoneMouseClicked
 
